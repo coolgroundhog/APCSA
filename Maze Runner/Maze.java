@@ -6,5 +6,7 @@ public class Maze {
         System.out.println("hello");
         
         System.out.println("test pull request");
+
+        System.out.println("pushing test");
     }
 }

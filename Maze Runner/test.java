@@ -1,12 +1,12 @@
-public class Maze {
+import java.util.ArrayList;
+public class test {
     public static void main(String[] args) {
-        System.out.println("hello");
-        System.out.println("test 2");
-        
-        System.out.println("hello");
-        
-        System.out.println("test pull request");
+        ArrayList<String> cars = new ArrayList<String>();
+
+        cars.add("Volkswagen");
+        cars.add("Honda");
     }
+
 
     public void makeBoard(){
         String[][] board = new String[2][2];
@@ -16,5 +16,4 @@ public class Maze {
             }
         }
     }
-
 }

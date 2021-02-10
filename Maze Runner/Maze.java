@@ -2,25 +2,20 @@ import java.util.Scanner;
 import java.util.Random; 
 
 public class Maze {
-    public static void main(String[] args) {
-        System.out.println("hello");
-        System.out.println("test 2");
-        
-        System.out.println("hello");
-        
-        System.out.println("test pull request");
 
+    static int loop = 0;
+    public static void main(String[] args) {
         makeBoard();
 
-        int loop = 0;
+        displayBoard();
         while(loop==0){
-            displayBoard();
             userInput();
+            displayBoard();
+            checkForEnd();
+
             computerAction();
-            if (checkForWin() == true){
-                checkForWin();
-                loop++;
-            }
+            displayBoard();
+            checkForEnd();
         }
 
 
@@ -65,7 +60,6 @@ public class Maze {
                 loop++;
                 
             }
-    
             else{
                 System.out.println("That square is taken! choose another");
             }
@@ -73,22 +67,74 @@ public class Maze {
     }
 
 
+    static int winOrLose = 0;
 
-    public static boolean checkForWin() {
-        boolean checkForWinner = checkThreeInARow() || checkThreeInAColumn() || checkThreeInADiagonal();
-        if (checkForWinner == true){
-            System.out.println("You won!");
+    public static void checkForEnd() {
+        checkThreeInARow();
+        checkThreeInAColumn();
+        checkThreeInADiagonal();
+        checkForDraw();
+
+        if (winOrLose == 1){
+            System.out.println("You win!");
+            loop++;
         }
-        return (checkForWinner);
+        else if (winOrLose == 2){
+            System.out.println("You lose!");
+            loop++;
+        }
+        else if (winOrLose == 3){
+            System.out.println("Draw!");
+            loop++;
+        }
+
     }
 
-    private static boolean checkThreeInARow() {
+    private static void checkThreeInARow() {
         for (int row = 0; row < 3; row++){
-            if (checkThreeSame(board[row][0], board[row][1], board[row][2]) == true){
-                return true;
+            if (checkThreeSame(board[row][0], board[row][1], board[row][2], "X") == true){
+                winOrLose++;
+            }
+            else if (checkThreeSame(board[row][0], board[row][1], board[row][2], "O") == true){
+                winOrLose = 2;
             }
         }
-        return false;
+
+    }
+
+    private static void checkThreeInAColumn() {
+        for (int column = 0; column < 3; column++){
+            if (checkThreeSame(board[0][column], board[1][column], board[2][column], "X") == true){
+                winOrLose++; 
+            }
+            else if (checkThreeSame(board[0][column], board[1][column], board[2][column], "O") == true){
+                winOrLose = 2; 
+            }
+        }
+
+    }
+
+    private static void checkThreeInADiagonal() {
+        if (checkThreeSame(board[0][0], board[1][1], board[2][2], "X") == true || checkThreeSame(board[0][2], board[1][1], board[2][0], "X") == true){
+            winOrLose ++;
+        }
+        else if (checkThreeSame(board[0][0], board[1][1], board[2][2], "O") == true || checkThreeSame(board[0][2], board[1][1], board[2][0], "O") == true){
+            winOrLose = 2;
+        }
+    }
+
+    private static void checkForDraw(){
+        int numberOfFreeSquares = 9;
+        for (int row = 0; row < 3; row++){
+            for (int column = 0; column < 3; column ++){
+                if (!board[row][column].equals("-")){
+                    numberOfFreeSquares --;
+                }
+            }
+        }
+        if (numberOfFreeSquares == 0){
+            winOrLose = 3;
+        }
     }
 /*
     private static boolean checkTwoInARowComputer(String XorO) {
@@ -126,15 +172,6 @@ public class Maze {
         return false;
     }  
 
-    private static boolean checkThreeInAColumn() {
-        for (int column = 0; column < 3; column++){
-            if (checkThreeSame(board[0][column], board[1][column], board[2][column]) == true){
-                return true;
-            }
-        }
-        return false;
-    }
-
     private static boolean checkTwoInAColumnComputer(String XorO) {
         for (int column = 0; column < 3; column++){
             if (checkTwoSame(board[0][column], board[1][column], XorO) == true ||
@@ -150,10 +187,6 @@ public class Maze {
                 }
         }
         return false;
-    }
-
-    private static boolean checkThreeInADiagonal() {
-        return ((checkThreeSame(board[0][0], board[1][1], board[2][2]) == true) || (checkThreeSame(board[0][2], board[1][1], board[2][0]) == true));
     }
 
     private static boolean checkTwoInADiagonalComputer(String XorO) {
@@ -183,8 +216,8 @@ public class Maze {
 
 
 
-    private static boolean checkThreeSame(String string1, String string2, String string3) {
-        return (string1.equals("X") && string2.equals(string1) && string3.equals(string2));
+    private static boolean checkThreeSame(String string1, String string2, String string3, String XorO) {
+        return (string1.equals(XorO) && string2.equals(string1) && string3.equals(string2));
     }
 
     private static boolean checkTwoSame(String string1, String string2, String input) {
@@ -218,6 +251,9 @@ public class Maze {
 
     
     public static void computerAction(){
+
+        System.out.println("Computer's turn:");
+        
         if (checkTwoInARowComputer("O") == true){
             checkTwoInARowComputer("O");
         }

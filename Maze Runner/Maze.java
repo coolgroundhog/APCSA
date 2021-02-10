@@ -11,19 +11,11 @@ public class Maze {
 
         makeBoard();
 
-        displayBoard();
+        while(1==1){
+            displayBoard();
+            userInput();
+        }
 
-        userInput();
-
-        displayBoard();
-
-        userInput();
-
-        displayBoard();
-
-        userInput();
-
-        displayBoard();
 
     }
 
@@ -60,27 +52,65 @@ public class Maze {
             int userInputColumn = scan.nextInt();
     */
             System.out.println("Which position?");
-            long userInputtedCell = scan.nextLong() - 1;
+            int userInputtedCell = scan.nextInt() - 1;
 
+            int y = 3;
+            //System.out.println((userInputtedCell)/y);
+            //System.out.println((userInputtedCell)%y);
 
-        
-	        int baseToConvertTo = 3;
-            String convertedUserInput = (Long.toString(userInputtedCell, baseToConvertTo));
- 
-            
-            int userInputColumn = Character.getNumericValue(convertedUserInput.charAt(1));
-            int userInputRow = Character.getNumericValue(convertedUserInput.charAt(0));
+            int userInputRow = (userInputtedCell)/y;
+            int userInputColumn = (userInputtedCell)%y;
 
 
             if (board[userInputRow][userInputColumn].equals("-")) {
                 board[userInputRow][userInputColumn] = "X";
                 loop++;
+                checkForWin();
+                
             }
     
             else{
                 System.out.println("That square is taken! choose another");
             }
         }
+    }
+
+
+
+    public static boolean checkForWin() {
+        boolean checkForWinner = checkRows() || checkColumns() || checkDiagonals();
+        if (checkForWinner == true){
+            System.out.println("You won!");
+        }
+        return (checkForWinner);
+    }
+
+    private static boolean checkRows() {
+        for (int row = 0; row < 3; row++){
+            if (checkThreeSame(board[row][0], board[row][1], board[row][2]) == true){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkColumns() {
+        for (int column = 0; column < 3; column++){
+            if (checkThreeSame(board[0][column], board[1][column], board[2][column]) == true){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkDiagonals() {
+        return ((checkThreeSame(board[0][0], board[1][1], board[2][2]) == true) || (checkThreeSame(board[0][2], board[1][1], board[2][0]) == true));
+    }
+
+
+
+    private static boolean checkThreeSame(String string1, String string2, String string3) {
+        return (string1.equals("X") && string2.equals(string1) && string3.equals(string2));
     }
 
 

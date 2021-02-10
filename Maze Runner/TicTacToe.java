@@ -18,14 +18,12 @@ public class TicTacToe {
                 while(true){
                     userInput("X");
                     displayBoard();
-                    checkForEnd();
                     if (checkForEnd()){
-                        break;
+                        break;//if checkForEnd (boolean) is true (true = either draw, player wins, or computer wins), it breaks
                     }
     
                     computerAction();
                     displayBoard();
-                    checkForEnd();
                     if (checkForEnd()){
                         break;
                     }
@@ -38,14 +36,12 @@ public class TicTacToe {
                 while(true){
                     userInput("X");
                     displayBoard();
-                    checkForEnd();
                     if (checkForEnd()){
                         break;
                     }
 
                     userInput("O");
                     displayBoard();
-                    checkForEnd();
                     if (checkForEnd()){
                         break;
                     }
@@ -85,14 +81,14 @@ public class TicTacToe {
             Scanner scan = new Scanner(System.in);
 
             System.out.println("Enter an open position from 1 to 9.");//asks for user position
-            int userInputtedCell = scan.nextInt() - 1;// minus 1 because array position starts from [0][0], not [0][1]
+            int userInputtedCell = scan.nextInt() - 1;// minus 1 because array position starts from [0][0], not [0][1]. 8 - 1 = 7
 
             //Convert user input from single digit to an element in 2d 3x3 array
             int y = 3;
             int userInputRow = (userInputtedCell)/y;//user input divided by 3 rounded down is the row of the 3x3 array.
                                                     //e.g. 7/3 = 2 rounded down, so its row would be 2
             int userInputColumn = (userInputtedCell)%y;//user input mod 3 is its column
-                                                    //e.g. 7 mod 3 = 1, so its column would be 1. 7 -> board[2][1]
+                                                    //e.g. 7 mod 3 = 1, so its column would be 1. 8 -> 7 -> board[2][1]
 
 
             if (board[userInputRow][userInputColumn].equals("-")) {
@@ -227,7 +223,7 @@ public class TicTacToe {
             checkMiddle();
         }
 
-        //if middle is taken, take random square
+        //if middle is taken, take random diagonal square
         else{
             chooseRandomDiagonal();
         }
@@ -351,3 +347,23 @@ public class TicTacToe {
     
 
 }
+
+
+
+/*
+  private static void chooseRandomHole(){
+        Random rand = new Random();
+        int loop = 0;
+        while (loop == 0){
+            int randomRow = rand.nextInt(3); 
+            int randomColumn = rand.nextInt(3);//chooses random row and column
+            if (board[randomRow][randomColumn].equals("-")){
+                board[randomRow][randomColumn] = "O";//fills it if empty
+                loop ++;
+            }
+            //if board[randomRow][randomColumn] doesn't equal "-", remains in while loop and chooses another random square
+        }
+        
+    }
+
+*/

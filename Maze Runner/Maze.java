@@ -136,25 +136,6 @@ public class Maze {
             winOrLose = 3;
         }
     }
-/*
-    private static boolean checkTwoInARowComputer(String XorO) {
-        for (int row = 0; row < 3; row++){
-            if (checkTwoSame(board[row][0], board[row][1], XorO) == true && board[row][2].equals("-")){
-                board[row][2] = "O";
-                return true;
-            }
-            else if (checkTwoSame(board[row][1], board[row][2], XorO) == true && board[row][0].equals("-")){
-                board[row][0] = "O";
-                return true;
-            }
-            else if (checkTwoSame(board[row][0], board[row][2], XorO) == true && board[row][1].equals("-")){
-                board[row][1] = "O";
-                return true;
-            }
-        }
-        return false;
-    }
-*/
 
     private static boolean checkTwoInARowComputer(String XorO) {
         for (int row = 0; row < 3; row++){
@@ -214,14 +195,12 @@ public class Maze {
         return false;
     }
 
-
-
     private static boolean checkThreeSame(String string1, String string2, String string3, String XorO) {
         return (string1.equals(XorO) && string2.equals(string1) && string3.equals(string2));
     }
 
-    private static boolean checkTwoSame(String string1, String string2, String input) {
-        return (string1.equals(input) && string2.equals(string1));
+    private static boolean checkTwoSame(String string1, String string2, String XorO) {
+        return (string1.equals(XorO) && string2.equals(string1));
     }
 
 
@@ -253,7 +232,7 @@ public class Maze {
     public static void computerAction(){
 
         System.out.println("Computer's turn:");
-        
+
         if (checkTwoInARowComputer("O") == true){
             checkTwoInARowComputer("O");
         }
